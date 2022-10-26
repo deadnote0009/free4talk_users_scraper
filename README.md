@@ -10,3 +10,11 @@
 - Number of Friends
 - Number of Followers
 - Number of people that the user follows
+
+## project files structure
+
+#### free4talk_scraper.py file:  this includes the source code for the scaper 
+
+#### test_free4talk_scraper.py file: this includes the test code for the scraper
+
+#### data.csv an example of the generated csv file
