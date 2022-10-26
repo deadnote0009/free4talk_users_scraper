@@ -16,12 +16,12 @@ class JsonRequest:
         res = requests.post(cls.__url)
         res.encoding = "utf-8-sig"
         cls.status = res.status_code
-        try :
+        try:
             return res.json()
 
         except ValueError:
             return False
-    
+
     # just to prent the status of the request
     @classmethod
     def __str__(cls):
@@ -70,9 +70,10 @@ class SaveAsCsv:
         self._status = JsonRequest.status
         self.parser = ParsedData(self._json_data)
         self.users = 0
+
     def save(self):
 
-        try: 
+        try:
             with open(self.file, "w") as f:
                 writer = csv.writer(f)
 
@@ -85,11 +86,11 @@ class SaveAsCsv:
                 for row in self.parser.extracting_data():
                     writer.writerow(row)
                     self.users += 1
-            
+
             return True
 
         except FileNotFoundError:
-                return False
+            return False
 
 
 if __name__ == "__main__":
