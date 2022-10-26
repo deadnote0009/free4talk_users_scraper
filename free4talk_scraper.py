@@ -1,11 +1,11 @@
+# the following code is for extracting data about users from free4talk
+
 import requests
 import csv
 
-# the following code is for extracting data about users from free4talk
-
 
 class JsonRequest:
-    # this url return json data including all the user info that we need
+    # this url returns json data including all the user info that we need
     __url = "https://free4talk-sync.herokuapp.com/sync/get/free4talk/groups/?a=sync-get-free4talk-groups"
 
     status = None
@@ -16,8 +16,12 @@ class JsonRequest:
         res = requests.post(cls.__url)
         res.encoding = "utf-8-sig"
         cls.status = res.status_code
-        return res.json()
+        try :
+            return res.json()
 
+        except ValueError:
+            return False
+    
     # just to prent the status of the request
     @classmethod
     def __str__(cls):
@@ -60,24 +64,36 @@ class ParsedData:
 class SaveAsCsv:
 
     # init the object
-    def __init__(self):
+    def __init__(self, file="data.csv"):
+        self.file = file
         self._json_data = JsonRequest.get_json_data()
         self._status = JsonRequest.status
         self.parser = ParsedData(self._json_data)
-
+        self.users = 0
     def save(self):
-        with open("data.csv", "w") as file:
-            writer = csv.writer(file)
 
-            # first write the header returned from parser._header
-            writer.writerow(self.parser._header)
+        try: 
+            with open(self.file, "w") as f:
+                writer = csv.writer(f)
 
-            # and then parser.extracting_data will yield a row at time so we can write into the csv
-            # until stopiteration error raised
-            for row in self.parser.extracting_data():
-                writer.writerow(row)
+                # first write the header returned from parser._header
+                writer.writerow(self.parser._header)
+
+                # and then parser.extracting_data will yield a row at time so we can write into the csv
+                # until stopiteration error raised
+
+                for row in self.parser.extracting_data():
+                    writer.writerow(row)
+                    self.users += 1
+            
+            return True
+
+        except FileNotFoundError:
+                return False
 
 
 if __name__ == "__main__":
+    print("running....")
     ob = SaveAsCsv()
     ob.save()
+    print("Number of users added:", ob.users)

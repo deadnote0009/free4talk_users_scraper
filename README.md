@@ -10,4 +10,3 @@
 - Number of Friends
 - Number of Followers
 - Number of people that the user follows
-   
