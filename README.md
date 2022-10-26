@@ -1,6 +1,6 @@
 # free4talk_users_scraper
 
-### scrap user data from [free4talk.com] (https://www.free4talk.com/) 
+### scrap users data from [free4talk.com](https://www.free4talk.com/) 
 
 ### the scraped data will be stored in data.csv file
 
