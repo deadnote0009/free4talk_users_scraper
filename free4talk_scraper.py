@@ -1,5 +1,5 @@
 import requests
-
+import csv
 # the following code is for extracting data about users from free4talk
 
 
@@ -25,18 +25,17 @@ class JsonRequest:
 
 # this class for parsing the data returned from JsonRequest class
 class ParsedData:
-    def __init__(self):
-        self.__data = JsonRequest.get_json_data()
-        self.status = JsonRequest.status
+    def __init__(self, json_data):
+        self.__data = json_data
         self.num_users = 0
-
+        self._header = ["Name", "Id", "Followers", "following", "friends"]
     # just print out the parsed data to the screen
     def extracting_data(self):
         try:
             for room in self.__data["data"]:
                 for user in self.__data["data"][room]["clients"]:
                     self.num_users += 1
-                    print(f'Name: {user["name"]}, ID: {user["id"]}, Followers: {user["followers"]}, Following:{user["following"]}, Friends:{user["friends"]}')
+                    yield [user["name"], user["id"], user["followers"], user["following"], user["friends"]]
 
             return True
         except KeyError:
@@ -46,13 +45,20 @@ class ParsedData:
         return f"{self.num_users}"
 
 
-def controller():
-    data = ParsedData()
-    if data.status == 200:
-        if data.extracting_data():
-            return f"Number of users is {data.num_users}"
-    return "False"
+class SaveAsCsv:
+    def __init__(self):
+        self._json_data = JsonRequest.get_json_data()
+        self._status = JsonRequest.status
+        self.parser = ParsedData(self._json_data)
+
+    def save(self):
+        with open("data.csv", "w") as file:
+            writer = csv.writer(file)
+            writer.writerow(self.parser._header)
+            for row in self.parser.extracting_data():
+                writer.writerow(row)
 
 
 if __name__ == "__main__":
-    print(controller())
+    ob = SaveAsCsv()
+    ob.save()
