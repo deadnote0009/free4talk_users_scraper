@@ -1,5 +1,6 @@
 import requests
 import csv
+
 # the following code is for extracting data about users from free4talk
 
 
@@ -29,15 +30,25 @@ class ParsedData:
         self.__data = json_data
         self.num_users = 0
         self._header = ["Name", "Id", "Followers", "following", "friends"]
-    # just print out the parsed data to the screen
+
+    # return one row at a time in order to add it to the csv file
     def extracting_data(self):
         try:
             for room in self.__data["data"]:
                 for user in self.__data["data"][room]["clients"]:
                     self.num_users += 1
-                    yield [user["name"], user["id"], user["followers"], user["following"], user["friends"]]
+
+                    # return one row at a time in order to add it to the csv file
+                    yield [
+                        user["name"],
+                        user["id"],
+                        user["followers"],
+                        user["following"],
+                        user["friends"],
+                    ]
 
             return True
+
         except KeyError:
             return False
 
@@ -45,7 +56,10 @@ class ParsedData:
         return f"{self.num_users}"
 
 
+# save data into a csv file called data.csv
 class SaveAsCsv:
+
+    # init the object
     def __init__(self):
         self._json_data = JsonRequest.get_json_data()
         self._status = JsonRequest.status
@@ -54,7 +68,12 @@ class SaveAsCsv:
     def save(self):
         with open("data.csv", "w") as file:
             writer = csv.writer(file)
+
+            # first write the header returned from parser._header
             writer.writerow(self.parser._header)
+
+            # and then parser.extracting_data will yield a row at time so we can write into the csv
+            # until stopiteration error raised
             for row in self.parser.extracting_data():
                 writer.writerow(row)
 
