@@ -20,8 +20,8 @@
 
 ## project files structure
 
-#### free4talk_scraper. Py file:  this includes the source code for the scraper 
-- ##### in this file I have implemented three classes first one is
+- #### free4talk_scraper.Py file: this includes the source code for the scraper 
+##### in this file I have implemented three classes first one is
 - JsonRequest: for making the http request and it will return data received as in json format
 - ParsedData: for parsing and extracting the targeted data ( it takes json_data as an arg which is returned by JsonRequest)
  - SaveAsCsv: this class is for saving the extracted data into a csv file it takes file as an arg so you can chose the name of the csv file that the data will be stored in  
