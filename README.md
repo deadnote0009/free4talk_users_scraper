@@ -26,8 +26,8 @@
 - ParsedData: for parsing and extracting the targeted data ( it takes json_data as an arg which is returned by JsonRequest)
  - SaveAsCsv: this class is for saving the extracted data into a csv file it takes file as an arg so you can chose the name of the csv file that the data will be stored in  
 #### test_free4talk_scraper.py file: this includes the test code for the scraper i used Pytest for testing 
-
-#### data.csv an example of the generated csv file there are three functions in this file 
 - ##### test_JsonRequest: for testing the JsonRequest class 
 - ##### test_ParsedData: for testing ParsedData class 
 - ##### test_SaveAsCsv for testing the SaveAsCsv class 
+
+#### data.csv an example of the generated csv file there are three functions in this file 
