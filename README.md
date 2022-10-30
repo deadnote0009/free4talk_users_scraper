@@ -14,7 +14,7 @@
 - Number of people that the user follows
 
 ### Note: 
-- #### Tthis is an interactive websitem, however i didn't use any third party libs like scrapy and so on , 
+- #### Tthis is an interactive website, however i didn't use any third party libs like scrapy and so on , 
 - #### I just used the requests package and pure python code to parse the json data retuned from the server  
 
 
