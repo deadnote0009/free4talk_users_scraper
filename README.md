@@ -9,6 +9,7 @@
 ## data that will be scraped 
 - User Name 
 - User Id
+- User Avatar
 - Number of Friends
 - Number of Followers
 - Number of people that the user follows
