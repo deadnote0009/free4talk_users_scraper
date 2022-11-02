@@ -33,7 +33,7 @@ class ParsedData:
     def __init__(self, json_data):
         self.__data = json_data
         self.num_users = 0
-        self._header = ["Name", "Id", "Followers", "following", "friends"]
+        self._header = ["Name", "Id", "Followers", "following", "friends", "avatar"]
 
     # return one row at a time in order to add it to the csv file
     def extracting_data(self):
@@ -49,6 +49,7 @@ class ParsedData:
                         user["followers"],
                         user["following"],
                         user["friends"],
+                        user["avatar"]
                     ]
 
             return True
